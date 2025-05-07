@@ -139,7 +139,7 @@ def ejecutar_experimentos(N=1000, k=3):
 
     for _ in range(N):
         primero = random.choice(['X', 'O'])
-        print("Empieza el jugador, ",primero)
+        #print("Empieza el jugador, ",primero)
         resultado, nodos = simular_juego(k, primero)
         nodos_total += nodos
         if resultado == 1:

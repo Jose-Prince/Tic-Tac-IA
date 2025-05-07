@@ -1,5 +1,20 @@
-def monteCarloTreeSearch(root):
-    while resourcesLeft(time, computational power):
+import random
+import math
+import time
+
+class Node:
+    def __init__(self, state, parent=None):
+        self.state = state
+        self.parent = parent
+        self.children = []
+        self.visits = 0
+        self.value = 0
+        self.untriedActions = getAvailableActions(state)
+
+def monteCarloTreeSearch(root, timeLimit=1.0):
+    endTime = time.time() + timeLimit
+
+    while time.time() < endTime:
         leaf = traverse(root)
         simulationResult = rollout(leaf)
         backpropagate(leaf, simulationResult)
@@ -7,23 +22,61 @@ def monteCarloTreeSearch(root):
     return bestChild(root)
 
 def traverse(node):
-    while fullyExpanded(node):
+    while fullyExpanded(node) and node.children:
         node = bestUct(node)
+    if node.untriedActions:
+        return expand(node)
+    return node
 
-    return pickUnvisited(node.children) or node
+def expand(node):
+    action = node.untriedActions.pop()
+    newState = applyAction(node.state, action)
+    child = Node(newState, parent=node)
+    node.children.append(child)
+    return child
 
 def rollout(node):
-    while nonTerminal(node):
-        node = rolloutPolicy(node)
-    return result(node)
-
-def rolloutPolicy(node):
-    return pickRandom(node.children)
+    currentState = node.state
+    while not isTerminal(currentState):
+        actions = getAvailableActions(currentState)
+        if not actions:
+            break
+        action = random.choice(actions)
+        currentState = applyAction(currentState, action)
+    return getResult(currentState)
 
 def backpropagate(node, result):
-    if isRoot(node) return
-    node.stats = updateStats(node, result)
-    backpropagate(node.parent)
+    while node is not None:
+        node.visits += 1
+        node.value += result
+        node = node.parent
 
-def bestChildren(node):
-    #pick child with highest number of visits
+def bestUct(node):
+    logN = math.log(node.visits)
+    return max(node.children, key=lambda child: uctScore(child, logN))
+
+def uctScore(child, logN):
+    if child.visits == 0:
+        return float('inf')
+    exploitation = child.value / child.visits
+    exploration = math.sqrt(logN / child.visits)
+    c = math.sqrt(2)
+    return exploitation + c * exploration
+
+def bestChild(node):
+    return max(node.children, key=lambda child: child.visits)
+
+def fullyExpanded(node):
+    return len(node.untriedActions) == 0
+
+def getAvailableActions(state):
+    pass
+
+def applyAction(state, action):
+    pass
+
+def isTerminal(state):
+    pass
+
+def getResult(state):
+    pass

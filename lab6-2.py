@@ -150,10 +150,10 @@ def ejecutar_experimentos(N=1000, k=3):
             empates += 1
 
     print(f"Simulaciones: {N}")
-    print(f"✅ Victorias de X: {victorias}")
-    print(f"🤝 Empates: {empates}")
-    print(f"❌ Derrotas: {derrotas}")
-    print(f"📊 Promedio de nodos explorados: {nodos_total / N:.2f}")
+    print(f"Victorias de X: {victorias}")
+    print(f"Empates: {empates}")
+    print(f"Derrotas: {derrotas}")
+    print(f"Promedio de nodos explorados: {nodos_total / N:.2f}")
 
 
 ejecutar_experimentos(N=1000, k=3)

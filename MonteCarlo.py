@@ -139,5 +139,7 @@ def gameSimulation(N=1000, t=1.0):
                 timeWinX += 1
         else:
             timeDraw += 1
+        
+        return [timeWinX, timeWinO, timeDraw]
 
-gameSimulation(t=0.2)
+#gameSimulation(t=0.2)

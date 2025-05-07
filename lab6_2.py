@@ -149,11 +149,6 @@ def ejecutar_experimentos(N=1000, k=3):
         else:
             empates += 1
 
-    print(f"Simulaciones: {N}")
-    print(f"Victorias de X: {victorias}")
-    print(f"Empates: {empates}")
-    print(f"Derrotas: {derrotas}")
-    print(f"Promedio de nodos explorados: {nodos_total / N:.2f}")
+    return [victorias, derrotas, empates]
 
-
-ejecutar_experimentos(N=1000, k=3)
+#ejecutar_experimentos(N=1000, k=3)

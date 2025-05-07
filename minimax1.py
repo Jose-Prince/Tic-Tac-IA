@@ -143,11 +143,7 @@ def ejecutar_experimentos_sin_poda(N=1000, k=3):
         else:
             empates += 1
 
-    print(f"Simulaciones (Minimax sin poda): {N}")
-    print(f"Victorias de X: {victorias}")
-    print(f"Empates: {empates}")
-    print(f"Derrotas: {derrotas}")
-    print(f"Promedio de nodos explorados: {nodos_total / N:.2f}")
+    return [victorias, derrotas, empates]
 
 
-ejecutar_experimentos_sin_poda(N=1000, k=3)
+#ejecutar_experimentos_sin_poda(N=1000, k=3)

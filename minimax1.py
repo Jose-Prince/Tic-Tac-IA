@@ -129,11 +129,10 @@ def simular_juego_sin_poda(k, quien_empieza):
     else:
         return 0, nodos
 
-def ejecutar_experimentos_sin_poda(N=1000, k=3):
+def ejecutar_experimentos_sin_poda(primero, N=1000, k=3):
     victorias = empates = derrotas = nodos_total = 0
 
     for _ in range(N):
-        primero = random.choice(['X', 'O'])
         resultado, nodos = simular_juego_sin_poda(k, primero)
         nodos_total += nodos
         if resultado == 1:
@@ -143,7 +142,6 @@ def ejecutar_experimentos_sin_poda(N=1000, k=3):
         else:
             empates += 1
 
-    return [victorias, derrotas, empates]
-
+    return victorias, derrotas, empates
 
 #ejecutar_experimentos_sin_poda(N=1000, k=3)

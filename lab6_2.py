@@ -134,11 +134,10 @@ def simular_juego(k, quien_empieza):
     else:
         return 0, nodos
 
-def ejecutar_experimentos(N=1000, k=3):
+def ejecutar_experimentos(primero, N=1000, k=3):
     victorias = empates = derrotas = nodos_total = 0
 
     for _ in range(N):
-        primero = random.choice(['X', 'O'])
         #print("Empieza el jugador, ",primero)
         resultado, nodos = simular_juego(k, primero)
         nodos_total += nodos
@@ -149,6 +148,6 @@ def ejecutar_experimentos(N=1000, k=3):
         else:
             empates += 1
 
-    return [victorias, derrotas, empates]
+    return victorias, derrotas, empates
 
 #ejecutar_experimentos(N=1000, k=3)

@@ -102,21 +102,11 @@ def checkWinner(state):
             return state[i]
     return None
 
-def printBoard(state):
-    chars = [c if c else ' ' for c in state]
-    for i in range(0, 9, 3):
-        print(f"{chars[i]} | {chars[i+1]} | {chars[i+2]}")
-        if i < 6:
-            print("--+---+--")
-
-def gameSimulation(N=1000, t=1.0):
-    timeWinX=0
-    timeWinO=0
-    timeDraw=0
+def gameSimulation(first, N=1000, t=1.0):
+    victory = defeat = draw = 0
     for _ in range(N):
         state = [None] * 9
-        startPlayer = random.choice(['X','O'])
-        currentPlayer = startPlayer
+        currentPlayer = first
         turn = 1
 
         while not isTerminal(state):
@@ -133,13 +123,13 @@ def gameSimulation(N=1000, t=1.0):
 
         winner = checkWinner(state)
         if winner:
-            if currentPlayer == 'X':
-                timeWinO += 1
+            if currentPlayer == first:
+                victory += 1
             else:
-                timeWinX += 1
+                defeat += 1
         else:
-            timeDraw += 1
+            draw += 1
         
-        return [timeWinX, timeWinO, timeDraw]
+    return victory, defeat, draw 
 
 #gameSimulation(t=0.2)

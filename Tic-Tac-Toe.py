@@ -2,21 +2,20 @@ import time
 from MonteCarlo import gameSimulation
 from lab6_2 import ejecutar_experimentos
 from minimax1 import ejecutar_experimentos_sin_poda
+from Negamax import gameSimulation_negamax
 
 def generar_tabla():
     variantes = [
-        ("Minimax", 3, "X"),
-        ("Minimax", 3, "O"),
-        ("Minimax", 5, "X"),
-        ("Minimax", 5, "O"),
-        ("Minimax α-β", 3, "X"),
-        ("Minimax α-β", 3, "O"),
-        ("Minimax α-β", 5, "X"),
-        ("Minimax α-β", 5, "O"),
-        ("MCTS", 0.1, "X"),
-        ("MCTS", 0.1, "O"),
-        ("MCTS", 0.2, "X"),
-        ("MCTS", 0.2, "O"),
+        ("Minimax", 9, "X"),
+        ("Minimax", 9, "O"),
+        ("Minimax α-β", 9, "X"),
+        ("Minimax α-β", 9, "O"),
+        ("Negamax", 9, "X"),
+        ("Negamax", 9, "O"),
+        ("MCTS", 1, "X"),
+        ("MCTS", 1, "O"),
+        ("MCTS", 2, "X"),
+        ("MCTS", 2, "O"),
     ]
 
     print(f"{'Algoritmo':<14} | {'k/t':<5} | {'Empieza':<8} | {'Victorias':<9} | {'Empates':<7} | {'Derrotas':<8} | {'Tiempo (s)':<10}")
@@ -26,18 +25,20 @@ def generar_tabla():
         start = time.time()
 
         if algoritmo == "Minimax":
-            victorias, empates, derrotas = ejecutar_experimentos_sin_poda(primero, N=1000, k=param)
+            victorias, empates, derrotas = ejecutar_experimentos_sin_poda(primero, N=100, k=param)
         elif algoritmo in ["MinimaxAB", "Minimax α-β"]:
-            victorias, empates, derrotas = ejecutar_experimentos(primero, N=1000, k=param)
+            victorias, empates, derrotas = ejecutar_experimentos(primero, N=100, k=param)
+        elif algoritmo == "Negamax":
+            victorias, derrotas, empates = gameSimulation_negamax(primero, N=100, k=param)
         elif algoritmo == "MCTS":
-            winX, winO, draws = gameSimulation(primero, N=1000, t=param)
+            winX, winO, draws = gameSimulation(primero, N=100, t=param)
             empates = draws
             if primero == 'X':
                 victorias = winX
-                derrotas = 1000 - winX - draws
+                derrotas = 10 - winX - draws
             else:
                 victorias = winO
-                derrotas = 1000 - winO - draws
+                derrotas = 10 - winO - draws
         else:
             continue
 
